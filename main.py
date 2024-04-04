@@ -17,9 +17,6 @@ class Ui_MainWindow(object):
         if self.f(f1, a)*self.f(f1, b) >= 0:
             self.restb.setText("fails")
             print("Bisection method fails.")
-            # methodfail()
-            # self.MethodError.setText("Method fails with the given input")
-            # self.MethodError.show()
             return None
         m_old = 0.0
         self.errortb.insertPlainText("--\n")
@@ -109,6 +106,7 @@ class Ui_MainWindow(object):
         return xi
 
     # Implementing Secant Method
+    # - and +
     def secant(self, f1, x0, x1, N, e):
         print("secant function")
         self.errortb.insertPlainText("--\n")
