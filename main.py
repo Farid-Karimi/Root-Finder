@@ -6,6 +6,12 @@ import sys
 import sympy as sym
 from sympy import *
 from scipy.misc import derivative
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider
+import matplotlib
+matplotlib.use('TkAgg')
+from ipywidgets import interact
 
 class Ui_MainWindow(object):
 
@@ -106,7 +112,6 @@ class Ui_MainWindow(object):
         return xi
 
     # Implementing Secant Method
-    # - and +
     def secant(self, f1, x0, x1, N, e):
         print("secant function")
         self.errortb.insertPlainText("--\n")
@@ -195,6 +200,7 @@ class Ui_MainWindow(object):
         self.FGxTextBox.hide()
         self.FxL.hide()
         self.buttonFile.hide()
+        self.buttonPlot.hide()
         try:
             self.reserror.show()
             self.reslb.show()
@@ -308,6 +314,54 @@ class Ui_MainWindow(object):
             data = f.read()
             self.FGxTextBox.setText(data)
 
+    #----------------------------ploting-----------------------------
+
+    # function to get file
+    def plot_function(self):
+        a = int(self.X0TB.text())
+        b = int(self.X1TB.text())
+        f_str = self.FGxTextBox.toPlainText()
+
+        x = symbols('x')
+        try:
+            # Parse the function string
+            f_expr = eval(f_str, {"x": x, "exp": exp, "cos": cos, "sin": sin, "tan": tan, "log": log})
+
+            # Lambdify the expression for numerical evaluation
+            func = lambdify(x, f_expr, modules=['numpy'])
+
+            # Create the figure and axis
+            fig, ax = plt.subplots(figsize=(8, 6))
+            plt.subplots_adjust(bottom=0.25)
+
+            # Calculate the number of points based on the range
+            num_points = 100 * (b - a)
+
+            # Plot the function
+            x_vals = np.linspace(a, b, num_points)
+            y_vals = func(x_vals)
+            ax.plot(x_vals, y_vals, color='#009189')
+
+            # Set y-axis limits
+            ax.set_ylim(a, b)
+
+            # Show the grid
+            ax.grid(True)
+
+            # Set aspect ratio to be equal
+            ax.set_aspect('equal')
+
+            # Enable interactive features
+            fig.canvas.mpl_connect('scroll_event', lambda event: plt.axis('auto' if abs(event.delta) > 0 else 'tight'))
+            fig.canvas.mpl_connect('key_press_event',
+                                   lambda event: [fig.canvas.key_press_event(event) for fig in plt.get_figures()])
+
+            plt.show()
+
+        except Exception as e:
+            print("Error:", e)
+            print("Function string:", f_str)
+
     # -------------------------------GUI------------------------------------
 
     # needs to be refactored and checked
@@ -352,9 +406,15 @@ class Ui_MainWindow(object):
 
         # add file button
         self.buttonFile = QtWidgets.QPushButton(self.centralwidget)
-        self.buttonFile.setGeometry(QtCore.QRect(150, 470, 130, 28))
+        self.buttonFile.setGeometry(QtCore.QRect(155, 470, 125, 28))
         self.buttonFile.setObjectName("buttonFile")
         self.buttonFile.setText("Open File")
+
+        # add plot button
+        self.buttonPlot = QtWidgets.QPushButton(self.centralwidget)
+        self.buttonPlot.setGeometry(QtCore.QRect(20, 470, 125, 28))
+        self.buttonPlot.setObjectName("buttonPlot")
+        self.buttonPlot.setText("Plot Function")
 
         self.button8 = QtWidgets.QPushButton(self.centralwidget)
         self.button8.setGeometry(QtCore.QRect(80, 300, 51, 28))
@@ -530,6 +590,7 @@ class Ui_MainWindow(object):
         self.errortb.hide()
         self.errorlb.hide()
         self.buttonFile.hide()
+        self.buttonPlot.hide()
         #Call function showReq to show hidden buttons
         self.confirmMethodButton.clicked.connect(self.showReq)
         self.buttonx.clicked.connect(lambda: self.tryFunc(self.buttonx.text()))
@@ -557,8 +618,12 @@ class Ui_MainWindow(object):
         self.leftBracket.clicked.connect(lambda: self.tryFunc(self.leftBracket.text()))
         self.rightBracket.clicked.connect(lambda: self.tryFunc(self.rightBracket.text()))
         self.CalculateButton.clicked.connect(lambda: self.Calc(self.FGxTextBox.toPlainText()))
+
         # added line file function
         self.buttonFile.clicked.connect(self.getfile)
+
+        # added plot function
+        self.buttonPlot.clicked.connect(self.plot_function)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -639,7 +704,8 @@ class Ui_MainWindow(object):
             self.button3,
             self.buttonDot,
             self.buttonx,
-            self.buttonFile
+            self.buttonFile,
+            self.buttonPlot
         ]
         for element in elements_to_show:
             element.show()
@@ -652,7 +718,7 @@ class Ui_MainWindow(object):
         self.comboBoxMethods.setItemText(2, _translate("MainWindow", "Fixed Point Iteration"))
         self.comboBoxMethods.setItemText(3, _translate("MainWindow", "Newton Raphson"))
         self.comboBoxMethods.setItemText(4, _translate("MainWindow", "Secant"))
-        self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:22pt; font-weight:600; font-style:italic;\">Root Calculator</span></p></body></html>"))
+        self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:22pt; font-weight:600; font-style:italic;\">Root Finder</span></p></body></html>"))
         self.ChooseMethodLabel.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Choose Method</span></p></body></html>"))
         self.confirmMethodButton.setText(_translate("MainWindow", "Confirm Method"))
         self.EnterRequirementL.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600;\">Enter Requirements</span></p></body></html>"))
@@ -778,5 +844,13 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+
+    MainWindow.setWindowTitle("RootFinder")
+
+    # Set window icon
+    icon = QtGui.QIcon("icon.png")
+    MainWindow.setWindowIcon(icon)
+    app.setWindowIcon(icon)
+
     MainWindow.show()
     sys.exit(app.exec_())
