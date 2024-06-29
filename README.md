@@ -2,6 +2,18 @@
 
 Welcome to the Rootfinding Application! This project is designed to provide a user-friendly interface for implementing various numerical analysis methods to find roots of mathematical functions. The application utilizes the Qt framework for the user interface, while the root finding methods are implemented using Python.
 
+<details>
+  <summary><h3>click here to see the images</h3></summary>
+
+Input page:
+![ui](https://github.com/Farid-Karimi/Root-Finder/assets/118434072/4360d490-bfb3-4b21-8e54-a43e7e2a78c1)
+Result page:
+![res](https://github.com/Farid-Karimi/Root-Finder/assets/118434072/3bef6e9b-f76b-443b-ae7e-198f52b17449)
+Plot interface:
+![plot](https://github.com/Farid-Karimi/Root-Finder/assets/118434072/70beaf58-cf6e-4f6a-b7ab-5a06fd170d11)
+
+</details>
+
 ## Methods Implemented
 
 The Rootfinding Application incorporates the following numerical analysis methods:
@@ -41,19 +53,10 @@ To install and run the Rootfinding Application, please follow these steps:
 
 1. Clone the repository to your local machine.
 2. Install the required dependencies listed in the `requirements.txt` file.
-3. Launch the application using your preferred Python IDE or by running the main script.
+3. Launch the application using your preferred Python IDE or by running the main script (pycharm is advised).
 4. Start using the application by following the instructions provided above.
-
-## Installation
-
-To use the Rootfinding Application, follow these simple steps:
-
-1. Clone the repository to your local machine.
-2. Install the required dependencies listed in the `requirements.txt` file.
-3. Launch the application using your preferred Python IDE or by running the main script.
-4. Enjoy exploring and utilizing the various root finding methods provided!
 
 ## Conclusion
 
 The Rootfinding Application simplifies the process of finding roots of mathematical functions by providing a user-friendly interface and implementing various numerical analysis methods.
-For future enhancements, the application could incorporate modified versions of the already implemented methods i.e. i struggled to implement the improved version of newton method for double roots so that could be a great start to improve the application.
+For future enhancements, the application could incorporate modified versions of the already implemented methods i.e. i struggled to implement the improved version of newton method for double roots so that could be a great starting point to improve the application.
