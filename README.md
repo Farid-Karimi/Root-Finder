@@ -1,15 +1,15 @@
 # Rootfinding Application
 
-Welcome to the Rootfinding Application! This project is designed to provide a user-friendly interface for implementing various numerical analysis methods to find roots of mathematical functions. The application utilizes the Qt framework for the user interface, while the root finding methods are implemented using Python.
+Welcome to the Rootfinding Application! This bonus project, undertaken during my basic numerical analysis course, aims to offer a user-friendly interface for implementing diverse numerical analysis methods to find roots of mathematical functions. The application uses the Qt framework for the user interface, while the root finding methods are implemented using Python.
 
 <details>
   <summary><h3>click here to see the images</h3></summary>
 
-Input page:
+### Input page:
 ![ui](https://github.com/Farid-Karimi/Root-Finder/assets/118434072/4360d490-bfb3-4b21-8e54-a43e7e2a78c1)
-Result page:
+### Result page:
 ![res](https://github.com/Farid-Karimi/Root-Finder/assets/118434072/3bef6e9b-f76b-443b-ae7e-198f52b17449)
-Plot interface:
+### Plot interface:
 ![plot](https://github.com/Farid-Karimi/Root-Finder/assets/118434072/70beaf58-cf6e-4f6a-b7ab-5a06fd170d11)
 
 </details>
